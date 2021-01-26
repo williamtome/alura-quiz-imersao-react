@@ -9,6 +9,7 @@ import GitHubCorner from '../src/components/GitHubCorner';
 import QuizBackground from '../src/components/QuizBackground';
 import Input from '../src/components/Input';
 import Button from '../src/components/Button';
+import Logo from '../src/components/Logo';
 
 // const BackgroundImage = styled.div`
 //   background-image: url("/marvel.png");
@@ -47,8 +48,8 @@ const Home = () => {
         <Head>
           <title>AluraQuiz - Marvel</title>
         </Head>
+        <Logo />
         <Widget>
-
           <Widget.Header>
             <h1>Marvel Studios</h1>
           </Widget.Header>
@@ -70,7 +71,7 @@ const Home = () => {
 
         </Widget>
 
-        <Widget>
+        {/* <Widget>
 
           <Widget.Header>
             <h1>Quiz da Galera</h1>
@@ -79,7 +80,7 @@ const Home = () => {
             <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit....</p>
           </Widget.Content>
 
-        </Widget>
+        </Widget> */}
 
         <Footer />
       </QuizContainer>
