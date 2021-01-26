@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Link from 'next/link';
 
 const LogoWrapper = styled.div`
   text-align: center;
@@ -7,7 +8,9 @@ const LogoWrapper = styled.div`
 
 const Logo = () => (
   <LogoWrapper>
-    <img src="/logoAlura.png" alt="AluraQuiz" />
+    <a href="/">
+      <img src="/logoAlura.png" alt="AluraQuiz" />
+    </a>
   </LogoWrapper>
 );
 
