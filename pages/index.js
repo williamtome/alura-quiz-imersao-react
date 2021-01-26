@@ -1,64 +1,21 @@
 import styled from 'styled-components'
 import db from '../db.json'
+import Widget from '../src/components/Widget'
+import Footer from '../src/components/Footer'
+import GitHubCorner from '../src/components/GitHubCorner'
+import QuizBackground from '../src/components/QuizBackground'
 
 const Title = styled.h1`
   font-size: 50px;
   color: ${({ theme }) => theme.colors.primary};
 `
 
-const BackgroundImage = styled.div`
-  background-image: url("/marvel.png");
-  flex: 1;
-  background-size: cover;
-  background-position: center;
-`
-
-const Widget = styled.div`
-  margin-top: 24px;
-  margin-bottom: 24px;
-  border: 1px solid #3F51B5;
-  background-color: ${({ theme }) => theme.colors.mainBg};
-  border-radius: 4px;
-  overflow: hidden;
-
-  h1, h2, h3 {
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 1;
-    margin-bottom: 0;
-  }
-  p {
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1;
-  }
-`
-
-Widget.Header = styled.header`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 18px 32px;
-  background-color: ${({ theme }) => theme.colors.primary};
-
-  * {
-    margin: 0;
-  }
-`
-
-Widget.Content = styled.div`
-  padding: 24px 32px 32px 32px;
-  & > *:first-child {
-    margin-top: 0;
-  }
-  & > *:last-child {
-    margin-bottom: 0;
-  }
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-`
+// const BackgroundImage = styled.div`
+//   background-image: url("/marvel.png");
+//   flex: 1;
+//   background-size: cover;
+//   background-position: center;
+// `
 
 export const QuizContainer = styled.div`
   width: 100%;
@@ -73,7 +30,7 @@ export const QuizContainer = styled.div`
 
 export default function Home() {
   return (
-    <BackgroundImage>
+    <QuizBackground backgroundImage={"/marvel.png"} >
       <QuizContainer>
         
         <Widget>
@@ -99,8 +56,10 @@ export default function Home() {
           </Widget.Content>
 
         </Widget>
-        
+
+        <Footer/>        
       </QuizContainer>
-    </BackgroundImage>
+      <GitHubCorner projectUrl="https://github.com/williamtome" />
+    </QuizBackground>
   )
 }
