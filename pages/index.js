@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 // eslint-disable-next-line import/no-unresolved
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import Widget from '../src/components/Widget';
 import Footer from '../src/components/Footer';
 import GitHubCorner from '../src/components/GitHubCorner';
 import QuizBackground from '../src/components/QuizBackground';
+import Input from '../src/components/Input';
+import Button from '../src/components/Button';
 
 // const BackgroundImage = styled.div`
 //   background-image: url("/marvel.png");
@@ -25,7 +28,19 @@ export const QuizContainer = styled.div`
   }
 `;
 
-export default function Home() {
+const Home = () => {
+  const router = useRouter();
+  const [name, setName] = useState('');
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    router.push(`/quiz?name=${name}`);
+  };
+
+  const onChange = (ev) => {
+    setName(ev.target.value);
+  };
+
   return (
     <QuizBackground backgroundImage="/marvel.png">
       <QuizContainer>
@@ -38,7 +53,19 @@ export default function Home() {
             <h1>Marvel Studios</h1>
           </Widget.Header>
           <Widget.Content>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit....</p>
+            <form onSubmit={onSubmit}>
+              <p>
+                Teste os seus conhecimentos sobre o universo cinematográfico da Marvel e divirta-se!
+              </p>
+              <Input 
+                onChange={onChange}
+                placeholder="DIz aí o seu nome"
+              />
+              <Button type="submit" disabled={name.length === 0}>
+                Jogar
+                {name}
+              </Button>
+            </form>
           </Widget.Content>
 
         </Widget>
@@ -59,4 +86,6 @@ export default function Home() {
       <GitHubCorner projectUrl="https://github.com/williamtome" />
     </QuizBackground>
   );
-}
+};
+
+export default Home;
