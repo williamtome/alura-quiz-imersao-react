@@ -4,6 +4,7 @@ import Widget from '../src/components/Widget'
 import Footer from '../src/components/Footer'
 import GitHubCorner from '../src/components/GitHubCorner'
 import QuizBackground from '../src/components/QuizBackground'
+import Head from 'next/head'
 
 const Title = styled.h1`
   font-size: 50px;
@@ -32,7 +33,9 @@ export default function Home() {
   return (
     <QuizBackground backgroundImage={"/marvel.png"} >
       <QuizContainer>
-        
+        <Head>
+          <title>AluraQuiz - Marvel</title>
+        </Head>
         <Widget>
           
           <Widget.Header>
