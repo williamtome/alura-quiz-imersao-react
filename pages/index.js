@@ -48,7 +48,9 @@ const Home = () => {
         <Head>
           <title>AluraQuiz - Marvel</title>
         </Head>
+
         <Logo />
+
         <Widget>
           <Widget.Header>
             <h1>Marvel Studios</h1>
@@ -58,7 +60,7 @@ const Home = () => {
               <p>
                 Teste os seus conhecimentos sobre o universo cinematográfico da Marvel e divirta-se!
               </p>
-              <Input 
+              <Input
                 onChange={onChange}
                 placeholder="DIz aí o seu nome"
               />
@@ -68,7 +70,6 @@ const Home = () => {
               </Button>
             </form>
           </Widget.Content>
-
         </Widget>
 
         {/* <Widget>
