@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import db from '../db.json';
 import Widget from '../src/components/Widget';
 import QuizBackground from '../src/components/QuizBackground';
@@ -20,9 +20,10 @@ const LoadingWidget = () => (
 );
 
 const QuestionWidget = ({
-  question, 
+  question,
   questionIndex,
-  totalQuestions
+  totalQuestions,
+  onSubmit,
 }) => (
   <Widget>
     <Widget.Header>
@@ -49,7 +50,11 @@ const QuestionWidget = ({
         {question.description}
       </p>
 
-      <form action="">
+      <form onSubmit={(event) => {
+        event.preventDefault();
+        onSubmit();
+      }}
+      >
         {question.alternatives.map((alternative, alternativeIndex) => {
           const alternativeId = `alternative__${alternativeIndex}`;
           return (
@@ -85,30 +90,56 @@ const screenStates = {
   RESULT: 'RESULT',
 };
 
-const screenState = 'LOADING';
-const questionIndex = 0;
-const question = db.questions[questionIndex];
-const totalQuestions = db.questions.length;
+export default function QuizPage() {
+  const [screenState, setScreenState] = useState(screenStates.LOADING);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const questionIndex = currentQuestion;
+  const question = db.questions[questionIndex];
+  const totalQuestions = db.questions.length;
 
-const QuizPage = () => (
-  <QuizBackground backgroundImage="/marvel.png">
-    <QuizContainer>
-      <Logo />
+  /**
+   * [React chama de Efeitos || Effects]
+   * React.useEfect
+   * Ciclo de vida de um componente:
+   * nasce === didMount
+   * atualiza === willUpdate
+   * morre == willUnmount
+   */
 
-      {screenState === screenStates.QUIZ && (
-        <QuestionWidget
-          question={question}
-          questionIndex={questionIndex}
-          totalQuestions={totalQuestions}
-        />
-      )}
+  useEffect(() => {
+    setTimeout(() => {
+      setScreenState(screenStates.QUIZ);
+    }, 1 * 1000);
+  }, []);
 
-      {screenState === screenStates.LOADING && <LoadingWidget />}
+  const handleSubmitQuiz = () => {
+    const nextQuestion = questionIndex + 1;
+    if (nextQuestion < totalQuestions) {
+      setCurrentQuestion(questionIndex + 1);
+    } else {
+      setScreenState(screenStates.RESULT);
+    }
+  };
 
-      {screenState === screenStates.RESULT && <div>Você acertou X questões. Parabéns!</div>}
+  return (
+    <QuizBackground backgroundImage="/marvel.png">
+      <QuizContainer>
+        <Logo />
 
-    </QuizContainer>
-  </QuizBackground>
-);
+        {screenState === screenStates.QUIZ && (
+          <QuestionWidget
+            onSubmit={handleSubmitQuiz}
+            question={question}
+            questionIndex={questionIndex}
+            totalQuestions={totalQuestions}
+          />
+        )}
 
-export default QuizPage;
+        {screenState === screenStates.LOADING && <LoadingWidget />}
+
+        {screenState === screenStates.RESULT && <div>Você acertou X questões. Parabéns!</div>}
+
+      </QuizContainer>
+    </QuizBackground>
+  );
+}
