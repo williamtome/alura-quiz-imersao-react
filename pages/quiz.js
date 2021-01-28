@@ -79,6 +79,13 @@ const QuestionWidget = ({
   </Widget>
 );
 
+const screenStates = {
+  LOADING: 'LOADING',
+  QUIZ: 'QUIZ',
+  RESULT: 'RESULT',
+};
+
+const screenState = 'LOADING';
 const questionIndex = 0;
 const question = db.questions[questionIndex];
 const totalQuestions = db.questions.length;
@@ -88,13 +95,18 @@ const QuizPage = () => (
     <QuizContainer>
       <Logo />
 
-      <QuestionWidget
-        question={question}
-        questionIndex={questionIndex}
-        totalQuestions={totalQuestions}
-      />
+      {screenState === screenStates.QUIZ && (
+        <QuestionWidget
+          question={question}
+          questionIndex={questionIndex}
+          totalQuestions={totalQuestions}
+        />
+      )}
 
-      <LoadingWidget />
+      {screenState === screenStates.LOADING && <LoadingWidget />}
+
+      {screenState === screenStates.RESULT && <div>Você acertou X questões. Parabéns!</div>}
+
     </QuizContainer>
   </QuizBackground>
 );
