@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
+import Loader from 'react-loader-spinner';
 import db from '../db.json';
 import Widget from '../src/components/Widget';
 import QuizBackground from '../src/components/QuizBackground';
@@ -14,7 +15,15 @@ const LoadingWidget = () => (
     </Widget.Header>
 
     <Widget.Content>
-      [Carregando Pergunta...]
+      {/* [Carregando Pergunta...] */}
+      <Loader
+        style={{ textAlign: 'center' }}
+        type="TailSpin"
+        color="#FFFFFF"
+        height={100}
+        width={100}
+        timeout={3000}
+      />
     </Widget.Content>
   </Widget>
 );
