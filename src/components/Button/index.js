@@ -14,6 +14,12 @@ const Button = styled.button`
   font-weight: bold;
   color: #FFFFFF;
   margin-top: 30.5px;
+  transition: 0.3s;
+
+  &:hover,
+  &:focus {
+    opacity: .5;
+  }
 `;
 
 export default Button;
