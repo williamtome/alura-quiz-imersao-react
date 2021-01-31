@@ -8,6 +8,46 @@ import QuizContainer from '../src/components/QuizContainer';
 import Logo from '../src/components/Logo';
 import Button from '../src/components/Button';
 
+const ResultWidget = ({
+  results,
+}) => {
+  const totalAssertions = results.reduce((somatorio, currentResult) => {
+    const isAcerto = currentResult === true;
+    return isAcerto ? somatorio + 1 : somatorio;
+  }, 0);
+
+  return (
+    <Widget>
+      <Widget.Header>
+        Resultado
+      </Widget.Header>
+
+      <Widget.Content>
+        <p>
+          Você acertou
+          {' '}
+          {totalAssertions}
+          {' '}
+          questões. Parabéns!
+        </p>
+        <ul>
+          {results.map((result, index) => (
+            <li>
+              #
+              {index + 1}
+              {' '}
+              Resultado:
+              {result === true
+                ? 'Acertou'
+                : 'Errou'}
+            </li>
+          ))}
+        </ul>
+      </Widget.Content>
+    </Widget>
+  );
+}
+
 const LoadingWidget = () => (
   <Widget>
     <Widget.Header>
@@ -28,70 +68,91 @@ const LoadingWidget = () => (
   </Widget>
 );
 
-const QuestionWidget = ({
+function QuestionWidget({
   question,
   questionIndex,
   totalQuestions,
   onSubmit,
-}) => (
-  <Widget>
-    <Widget.Header>
-      <h1>
-        {`Pergunta ${questionIndex + 1} de ${totalQuestions}`}
-      </h1>
-    </Widget.Header>
+}) {
+  const [selectedAlternative, setSelectedAlternative] = useState(undefined);
+  const isCorrect = selectedAlternative === question.answer;
+  const [isQuestionSubmited, setIsQuestionSubmited] = useState(false);
+  const hasAlternativeSelected = selectedAlternative !== undefined;
 
-    <img
-      src={question.image}
-      alt="Descrição"
-      style={{
-        width: '100%',
-        height: '150px',
-        objectFit: 'cover',
-      }}
-    />
+  return (
+    <Widget>
+      <Widget.Header>
+        <h1>
+          {`Pergunta ${questionIndex + 1} de ${totalQuestions}`}
+        </h1>
+      </Widget.Header>
 
-    <Widget.Content>
-      <h2>
-        {question.title}
-      </h2>
-      <p>
-        {question.description}
-      </p>
+      <img
+        src={question.image}
+        alt="Descrição"
+        style={{
+          width: '100%',
+          height: '150px',
+          objectFit: 'cover',
+        }}
+      />
 
-      <form onSubmit={(event) => {
-        event.preventDefault();
-        onSubmit();
-      }}
-      >
-        {question.alternatives.map((alternative, alternativeIndex) => {
-          const alternativeId = `alternative__${alternativeIndex}`;
-          return (
-            <Widget.Topic
-              htmlFor={alternativeId}
-              as="label"
-            >
-              <input
-                id={alternativeId}
-                type="radio"
-                name={`question__${questionIndex}`}
-              />
-              {alternative}
-            </Widget.Topic>
-          );
-        })}
+      <Widget.Content>
+        <h2>
+          {question.title}
+        </h2>
+        <p>
+          {question.description}
+        </p>
 
-        <pre>
-          {JSON.stringify(question.alternatives, null, 4)}
-        </pre>
+        <form onSubmit={(event) => {
+          event.preventDefault();
+          setIsQuestionSubmited(true);
+          setTimeout(() => {
+            onSubmit();
+            setIsQuestionSubmited(false);
+            setSelectedAlternative(undefined);
+          }, 3000);
+        }}
+        >
+          {question.alternatives.map((alternative, alternativeIndex) => {
+            const alternativeId = `alternative__${alternativeIndex}`;
+            return (
+              <Widget.Topic
+                htmlFor={alternativeId}
+                key={alternativeId}
+                as="label"
+              >
+                <input
+                  id={alternativeId}
+                  type="radio"
+                  name={`question__${questionIndex}`}
+                  onChange={() => setSelectedAlternative(alternativeIndex)}
+                />
+                {alternative}
+              </Widget.Topic>
+            );
+          })}
 
-        <Button>
-          Confirmar
-        </Button>
-      </form>
-    </Widget.Content>
-  </Widget>
-);
+          {/* <pre>
+            {JSON.stringify(question.alternatives, null, 4)}
+          </pre> */}
+
+          <Button
+            type="submit"
+            disabled={!hasAlternativeSelected}
+          >
+            Confirmar
+          </Button>
+          {/* <p>Alternativa escolhida: {`${selectedAlternative}`}</p> */}
+          {isQuestionSubmited && isCorrect && <p>Você acertou!</p>}
+
+          {isQuestionSubmited && !isCorrect && <p>Errrooouuuu! A alternativa certa é {`${question.answer}`}</p>}
+        </form>
+      </Widget.Content>
+    </Widget>
+  );
+}
 
 const screenStates = {
   LOADING: 'LOADING',
@@ -100,11 +161,19 @@ const screenStates = {
 };
 
 export default function QuizPage() {
-  const [screenState, setScreenState] = useState(screenStates.LOADING);
+  const [screenState, setScreenState] = useState(screenStates.RESULT);
+  const [results, setResults] = useState([true, false, true]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const questionIndex = currentQuestion;
   const question = db.questions[questionIndex];
   const totalQuestions = db.questions.length;
+
+  const addResult = (result) => {
+    setResults([
+      ...results,
+      result,
+    ]);
+  };
 
   /**
    * [React chama de Efeitos || Effects]
@@ -117,7 +186,7 @@ export default function QuizPage() {
 
   useEffect(() => {
     setTimeout(() => {
-      setScreenState(screenStates.QUIZ);
+      // setScreenState(screenStates.QUIZ);
     }, 1 * 1000);
   }, []);
 
@@ -146,7 +215,7 @@ export default function QuizPage() {
 
         {screenState === screenStates.LOADING && <LoadingWidget />}
 
-        {screenState === screenStates.RESULT && <div>Você acertou X questões. Parabéns!</div>}
+        {screenState === screenStates.RESULT && <ResultWidget results={results} />}
 
       </QuizContainer>
     </QuizBackground>
