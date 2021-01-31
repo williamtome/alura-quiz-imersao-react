@@ -7,7 +7,7 @@
         "image": "https://media.giphy.com/media/MUlmRFnTQxwJ2/giphy.gif",
         "title": "Quando foi lançado o primeiro filme do Homem de Ferro?",
         "description": "Essa é pra aquecer",
-        "answer": 4,
+        "answer": 3,
         "alternatives": [
           "2005",
           "2006",
@@ -16,15 +16,15 @@
         ]
       },
       {
-        "image": "https://media.giphy.com/media/13FrpeVH09Zrb2/giphy.gif",
+        "image": "https://media1.tenor.com/images/ee70f95440b0222013e7d6087226ec12/tenor.gif?itemid=17755537",
         "title": "Quem foi o vilão do filme Os Vingadores?",
         "description": "Essa é fácil hein!!",
-        "answer": 0,
+        "answer": 2,
         "alternatives": [
           "Thanos",
-           "Galactus",
-           "Loki",
-           "Doutor Destino"
+          "Galactus",
+          "Loki",
+          "Doutor Destino"
         ]
       }
     ],
