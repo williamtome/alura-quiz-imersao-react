@@ -5,6 +5,7 @@ import db from '../db.json';
 import Widget from '../src/components/Widget';
 import QuizBackground from '../src/components/QuizBackground';
 import QuizContainer from '../src/components/QuizContainer';
+import AlternativesForm from '../src/components/AlternativesForm';
 import Logo from '../src/components/Logo';
 import Button from '../src/components/Button';
 
@@ -106,26 +107,32 @@ function QuestionWidget({
           {question.description}
         </p>
 
-        <form onSubmit={(event) => {
-          event.preventDefault();
-          setIsQuestionSubmited(true);
-          setTimeout(() => {
-            addResult(isCorrect);
-            onSubmit();
-            setIsQuestionSubmited(false);
-            setSelectedAlternative(undefined);
-          }, 3000);
-        }}
+        <AlternativesForm 
+          onSubmit={(event) => {
+            event.preventDefault();
+            setIsQuestionSubmited(true);
+            setTimeout(() => {
+              addResult(isCorrect);
+              onSubmit();
+              setIsQuestionSubmited(false);
+              setSelectedAlternative(undefined);
+            }, 3000);
+          }}
         >
           {question.alternatives.map((alternative, alternativeIndex) => {
             const alternativeId = `alternative__${alternativeIndex}`;
+            const alternativeStatus = isCorrect ? 'SUCCESS' : 'ERROR';
+            const isSelected = selectedAlternative === alternativeIndex;
             return (
               <Widget.Topic
                 htmlFor={alternativeId}
                 key={alternativeId}
                 as="label"
+                data-selected={isSelected}
+                data-status={isQuestionSubmited && alternativeStatus}
               >
                 <input
+                  style={{ display: 'none' }}
                   id={alternativeId}
                   type="radio"
                   name={`question__${questionIndex}`}
@@ -150,7 +157,7 @@ function QuestionWidget({
           {isQuestionSubmited && isCorrect && <p>Você acertou!</p>}
 
           {isQuestionSubmited && !isCorrect && <p>Errrooouuuu! A alternativa certa é {`${question.answer}`}</p>}
-        </form>
+        </AlternativesForm>
       </Widget.Content>
     </Widget>
   );
