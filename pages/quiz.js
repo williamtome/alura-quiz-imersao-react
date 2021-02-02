@@ -32,7 +32,7 @@ const ResultWidget = ({
         </p>
         <ul>
           {results.map((result, index) => (
-            <li>
+            <li key={`results__${result}`}>
               #
               {index + 1}
               {' '}
@@ -73,6 +73,7 @@ function QuestionWidget({
   questionIndex,
   totalQuestions,
   onSubmit,
+  addResult
 }) {
   const [selectedAlternative, setSelectedAlternative] = useState(undefined);
   const isCorrect = selectedAlternative === question.answer;
@@ -109,6 +110,7 @@ function QuestionWidget({
           event.preventDefault();
           setIsQuestionSubmited(true);
           setTimeout(() => {
+            addResult(isCorrect);
             onSubmit();
             setIsQuestionSubmited(false);
             setSelectedAlternative(undefined);
@@ -161,8 +163,8 @@ const screenStates = {
 };
 
 export default function QuizPage() {
-  const [screenState, setScreenState] = useState(screenStates.RESULT);
-  const [results, setResults] = useState([true, false, true]);
+  const [screenState, setScreenState] = useState(screenStates.LOADING);
+  const [results, setResults] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const questionIndex = currentQuestion;
   const question = db.questions[questionIndex];
@@ -186,7 +188,7 @@ export default function QuizPage() {
 
   useEffect(() => {
     setTimeout(() => {
-      // setScreenState(screenStates.QUIZ);
+      setScreenState(screenStates.QUIZ);
     }, 1 * 1000);
   }, []);
 
@@ -210,6 +212,7 @@ export default function QuizPage() {
             question={question}
             questionIndex={questionIndex}
             totalQuestions={totalQuestions}
+            addResult={addResult}
           />
         )}
 
