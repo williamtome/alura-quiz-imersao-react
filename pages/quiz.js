@@ -47,7 +47,7 @@ const ResultWidget = ({
       </Widget.Content>
     </Widget>
   );
-}
+};
 
 const LoadingWidget = () => (
   <Widget>
@@ -74,7 +74,7 @@ function QuestionWidget({
   questionIndex,
   totalQuestions,
   onSubmit,
-  addResult
+  addResult,
 }) {
   const [selectedAlternative, setSelectedAlternative] = useState(undefined);
   const isCorrect = selectedAlternative === question.answer;
@@ -107,7 +107,7 @@ function QuestionWidget({
           {question.description}
         </p>
 
-        <AlternativesForm 
+        <AlternativesForm
           onSubmit={(event) => {
             event.preventDefault();
             setIsQuestionSubmited(true);
@@ -156,7 +156,7 @@ function QuestionWidget({
           {/* <p>Alternativa escolhida: {`${selectedAlternative}`}</p> */}
           {isQuestionSubmited && isCorrect && <p>Você acertou!</p>}
 
-          {isQuestionSubmited && !isCorrect && <p>Errrooouuuu! A alternativa certa é {`${question.answer}`}</p>}
+          {isQuestionSubmited && !isCorrect && <p>{`Errrooouuuu! A alternativa certa é ${question.answer}`}</p>}
         </AlternativesForm>
       </Widget.Content>
     </Widget>
