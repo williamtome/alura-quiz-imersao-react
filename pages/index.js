@@ -10,6 +10,7 @@ import QuizContainer from '../src/components/QuizContainer';
 import Input from '../src/components/Input';
 import Button from '../src/components/Button';
 import Logo from '../src/components/Logo';
+import db from '../db.json';
 
 const Home = () => {
   const router = useRouter();
@@ -55,16 +56,16 @@ const Home = () => {
           </Widget.Content>
         </Widget>
 
-        {/* <Widget>
+        <Widget>
 
           <Widget.Header>
             <h1>Quiz da Galera</h1>
           </Widget.Header>
           <Widget.Content>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit....</p>
+            Links dos quizes
           </Widget.Content>
 
-        </Widget> */}
+        </Widget>
 
         <Footer />
       </QuizContainer>
