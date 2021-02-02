@@ -29,7 +29,9 @@
       }
     ],
     "external": [
-      ""
+      "https://quiz-cavaleiro-zodiaco.vercel.app/",
+      "https://alura-pokemon-quiz.daniloamsilva.vercel.app/",
+      "https://musicquiz.sidibecker.vercel.app/"
     ],
     "theme": {
       "colors": {
