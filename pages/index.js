@@ -62,7 +62,23 @@ const Home = () => {
             <h1>Quiz da Galera</h1>
           </Widget.Header>
           <Widget.Content>
-            Links dos quizes
+            <ul>
+              {db.external.map((url) => {
+                const [projectName, githubUser] = url.replace(/\//g, '')
+                  .replace('https:', '')
+                  .replace('.vercel.app', '')
+                  .split('.');
+                return (
+                  <li>
+                    <Widget.Topic
+                      href={url}
+                    >
+                      {`${githubUser}/${projectName}`}
+                    </Widget.Topic>
+                  </li>
+                );
+              })}
+            </ul>
           </Widget.Content>
 
         </Widget>
