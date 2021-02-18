@@ -1,7 +1,7 @@
 {
     "bg": "https://i2.wp.com/css-tricks.com/wp-content/uploads/2017/06/css-is-awesome-scaled.jpg?resize=1536%2C1208&ssl=1",
-    "title": "Quiz CSS da Alura",
-    "description": "Teste os seus conhecimentos sobre CSS e vamos ver quantos layouts você vai deixar de quebrar",
+    "title": "Quiz Marvel do William Tomé",
+    "description": "Teste os seus conhecimentos sobre o universo cinematográfico da Marvel e divirta-se!",
     "questions": [
       {
         "image": "https://media.giphy.com/media/MUlmRFnTQxwJ2/giphy.gif",
@@ -29,7 +29,6 @@
       }
     ],
     "external": [
-      "https://quiz-cavaleiro-zodiaco.vercel.app/",
       "https://alura-pokemon-quiz.daniloamsilva.vercel.app/",
       "https://musicquiz.sidibecker.vercel.app/"
     ],
