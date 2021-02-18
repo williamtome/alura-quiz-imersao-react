@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import Loader from 'react-loader-spinner';
-import db from '../db.json';
-import Widget from '../src/components/Widget';
-import QuizBackground from '../src/components/QuizBackground';
-import QuizContainer from '../src/components/QuizContainer';
-import AlternativesForm from '../src/components/AlternativesForm';
-import Logo from '../src/components/Logo';
-import Button from '../src/components/Button';
+import db from '../../db.json';
+import Widget from '../../src/components/Widget';
+import QuizBackground from '../../src/components/QuizBackground';
+import QuizContainer from '../../src/components/QuizContainer';
+import AlternativesForm from '../../src/components/AlternativesForm';
+import Logo from '../../src/components/Logo';
+import Button from '../../src/components/Button';
 
 const ResultWidget = ({
   results,
